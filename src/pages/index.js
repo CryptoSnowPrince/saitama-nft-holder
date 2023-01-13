@@ -6,6 +6,7 @@ import Web3 from "web3";
 import {
   RUN_MODE,
   CONF_RPC,
+  MAINNET,
   ALERT_DELAY,
   ALERT_POSITION,
   ALERT_EMPTY,
@@ -16,12 +17,6 @@ import {
 } from "../constant";
 import * as action from '../store/actions'
 import * as selector from '../store/selectors'
-
-import House from "../components/house";
-import Footer from "../components/footer";
-import RightPanel from "../components/rightPanel";
-import LeftPanel from "../components/leftPanel";
-import Floor0 from "../components/floor0";
 
 const web3Modal = web3ModalSetup();
 const nftContract = getNFTContract()
@@ -81,11 +76,11 @@ const Home = () => {
     }
     // alert(`loadWeb3Modal4 ${acc}`);
 
-    // const _curChainId = await web3Provider.eth.getChainId();
-    // if (_curChainId !== MAINNET) {
-    //   setAlertMessage({ type: ALERT_ERROR, message: 'Wrong Network! Please switch to Binance Smart Chain!' })
-    //   return;
-    // }
+    const _curChainId = await web3Provider.eth.getChainId();
+    if (_curChainId !== MAINNET) {
+      setAlertMessage({ type: ALERT_ERROR, message: 'Wrong Network! Please switch to Binance Smart Chain!' })
+      return;
+    }
     // alert("loadWeb3Modal6");
 
     dispatch(action.setWeb3(web3Provider))
@@ -134,7 +129,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         if (curAcount) {
-          const _accountData = await nftContract.methods.totalUpgrades(curAcount).call();
+          const _accountData = await nftContract.methods.balanceOf(curAcount).call();
           setAccountData(_accountData);
         }
       } catch (error) {
@@ -219,56 +214,17 @@ const Home = () => {
           <div style={{ width: "200px" }}></div>
           {/* <div style={{ width: "200px", height: "140px" }}></div> */}
           <button className="btn btn-primary btn-lg btnd btn-custom"
-            style={{ color: "#fff", width: "155px", fontWeight: "bold" }}
+            style={{ color: "#fff", width: "170px", fontWeight: "bold" }}
             disabled={pendingTx}
             onClick={isConnected ? logoutOfWeb3Modal : loadWeb3Modal}>
             <i className="fas fa-wallet" style={{ marginRight: "12px", color: "white" }}>
             </i>
-            {/* {connButtonText} */}
+            {curAcount ? `${curAcount.toString().substr(0, 5)}...${curAcount.toString().substr(39, 41)}` : `Connect`}
           </button>
         </div>
       </nav>
+      <hi>{accountData}</hi>
       <div className="container"></div>
-      {/* <LeftPanel
-        isConnected={isConnected}
-        curAcount={curAcount}
-        coins={enableValue() ? houseInfo.coins : "--"}
-        cash={enableValue() ? houseInfo.cash : "--"}
-        yieldValue={enableValue() ? `+ ${houseYield / 10}` : "--"}
-        setShowBuyCoins={setShowBuyCoins}
-        setShowGetBUSD={setShowGetBUSD}
-        setShowReferral={setShowReferral}
-        setAlertMessage={setAlertMessage}
-      // logoutOfWeb3Modal={logoutOfWeb3Modal}
-      />
-      <RightPanel
-        allHousesLength={allHousesLength}
-        totalInvested={totalInvested}
-        totalUpgrades={totalUpgrades}
-        partners={enableValue() ? `${parseInt(houseInfo.refs) + parseInt(houseInfo.refs2) + parseInt(houseInfo.refs3)}` : `0`}
-      />
-      <div className="house">
-        <div id="cloud-intro" />
-        <div className="roof" />
-        <div className="floors">
-          <Elevator openedHouseId={openedHouseId()} />
-          {[8, 7, 6, 5, 4, 3, 2, 1].map((value) => ( // value = 8, 7, 6, 5, 4, 3, 2, 1
-            <House
-              key={value}
-              houseLevel={houseLevel(value)}
-              id={value}
-              isConnected={isConnected}
-              setAlertMessage={setAlertMessage}
-              setHouseId={setHouseId} />
-          ))}
-          <Floor0 showDeliveryMan={!enableValue() || numberOfChefs() > 0} />
-        </div>
-      </div>
-      <Footer
-        isConnected={isConnected}
-        setShowGetMoney={setShowGetMoney}
-        loadWeb3Modal={loadWeb3Modal}
-      /> */}
     </>
   );
 }
