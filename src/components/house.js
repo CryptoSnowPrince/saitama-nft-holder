@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Chef from './animations/chef';
 import {
     ALERT_WARN,
     ALERT_CONNECT_WALLET,
-    price,
 } from "../constant";
 
 const House = ({ id, houseLevel, isConnected, setAlertMessage, setHouseId }) => {
@@ -46,12 +44,7 @@ const House = ({ id, houseLevel, isConnected, setAlertMessage, setHouseId }) => 
 
     return (
         <div className='floor_house' id={`house${id}`}>
-            {(houseLevel > 0 || !isConnected) && <div className='counter-boy-in-house' />}
-            {(houseLevel > 0 || !isConnected) && <Chef className="chef-5" chefId={4} cookingTime={cookingTime} walkTime={5500 - deltaTime} backTime={5000 - deltaTime} />}
-            {visible4 && (houseLevel > 1 || (!isConnected && id > 2)) && <Chef className="chef-4" chefId={3} cookingTime={cookingTime} walkTime={4500 - deltaTime} backTime={4000 - deltaTime} />}
-            {visible3 && (houseLevel > 2 || (!isConnected && id > 4)) && <Chef className="chef-3" chefId={2} cookingTime={cookingTime} walkTime={3500 - deltaTime} backTime={3000 - deltaTime} />}
-            {visible2 && (houseLevel > 3 || (!isConnected && id > 6)) && <Chef className="chef-2" chefId={1} cookingTime={cookingTime} walkTime={2500 - deltaTime} backTime={2000 - deltaTime} />}
-            {visible1 && (houseLevel > 4 || (!isConnected && id > 7)) && <Chef className="chef-1" chefId={0} cookingTime={cookingTime} walkTime={1500 - deltaTime} backTime={1000 - deltaTime} />}
+            {/* {(houseLevel > 0 || !isConnected) && <div className='counter-boy-in-house' />}
             {(houseLevel > 0 || !isConnected) && <div className='counter-in-house' />}
             <div className='tables'>
                 {(houseLevel > 0 || !isConnected) && <div className='counter-table table5' />}
@@ -78,7 +71,7 @@ const House = ({ id, houseLevel, isConnected, setAlertMessage, setHouseId }) => 
                         </div>
                     </>
                 )}
-            </button>
+            </button> */}
         </div>
     )
 }
