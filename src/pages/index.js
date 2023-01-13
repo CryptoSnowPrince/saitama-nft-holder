@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
+import Moralis from 'moralis';
+import { EvmChain } from '@moralisweb3/evm-utils';
 import web3ModalSetup from "./../helpers/web3ModalSetup";
 import Web3 from "web3";
 import {
   RUN_MODE,
   CONF_RPC,
   MAINNET,
+  API_KEY,
   ALERT_DELAY,
   ALERT_POSITION,
   ALERT_EMPTY,
@@ -15,15 +18,15 @@ import {
   ALERT_ERROR,
   getNFTContract,
 } from "../constant";
+import { getRNG } from "../utils/util";
 import * as action from '../store/actions'
 import * as selector from '../store/selectors'
 
 const web3Modal = web3ModalSetup();
-const nftContract = getNFTContract()
-const _httpConfProvider = new Web3.providers.HttpProvider(CONF_RPC)
-const _web3ConfNoAccount = new Web3(_httpConfProvider)
-const isAddress = _web3ConfNoAccount.utils.isAddress
-const utils = _web3ConfNoAccount.utils
+const httpConfProvider = new Web3.providers.HttpProvider(CONF_RPC)
+const web3ConfNoAccount = new Web3(httpConfProvider)
+const nftContract = getNFTContract(web3ConfNoAccount)
+const chain = EvmChain.ETHEREUM;
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -37,6 +40,7 @@ const Home = () => {
   const [pendingTx, setPendingTx] = useState(false);
 
   const [accountData, setAccountData] = useState(0)
+  const [nftData, setNftData] = useState(0)
 
   const [alertMessage, setAlertMessage] = useState({ type: ALERT_EMPTY, message: "" })
 
@@ -131,6 +135,12 @@ const Home = () => {
         if (curAcount) {
           const _accountData = await nftContract.methods.balanceOf(curAcount).call();
           setAccountData(_accountData);
+
+          await Moralis.start({ apiKey: API_KEY });
+
+          const response = await Moralis.EvmApi.nft.getWalletNFTs({ curAcount, chain });
+          console.log(response?.result);
+          setNftData(response?.result)
         }
       } catch (error) {
         RUN_MODE('fetchData error: ', error);
@@ -210,7 +220,7 @@ const Home = () => {
       <ToastContainer />
       <nav className="navbar navbar-expand-sm navbar-dark" style={{ marginTop: "30px" }}>
         <div className="container"
-          style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+          style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
           <div style={{ width: "200px" }}></div>
           {/* <div style={{ width: "200px", height: "140px" }}></div> */}
           <button className="btn btn-primary btn-lg btnd btn-custom"
@@ -223,8 +233,11 @@ const Home = () => {
           </button>
         </div>
       </nav>
-      <hi>{accountData}</hi>
-      <div className="container"></div>
+      <div style={{justifyContent: "center"}}>
+        <h1>{accountData}</h1>
+        <h1>{nftData}</h1>
+        <h1>{getRNG()}</h1>
+      </div>
     </>
   );
 }
