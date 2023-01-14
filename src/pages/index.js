@@ -173,9 +173,9 @@ const Home = () => {
       <nav className="navbar navbar-expand-sm navbar-dark" style={{ marginTop: "30px" }}>
         <div className="container"
           style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-          <div style={{ width: "240px" }}></div>
+          <div style={{ width: "200px" }}></div>
           <button className="btn btn-primary btn-lg"
-            style={{ color: "#fff", width: "170px", fontWeight: "bold" }}
+            style={{ color: "#fff", width: "200px", fontWeight: "bold" }}
             disabled={false}
             onClick={curAcount ? logoutOfWeb3Modal : loadWeb3Modal}>
             <i className="fas fa-wallet" style={{ marginRight: "12px", color: "white" }}>
