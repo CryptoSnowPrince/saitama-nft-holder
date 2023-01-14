@@ -173,7 +173,7 @@ const Home = () => {
       <nav className="navbar navbar-expand-sm navbar-dark" style={{ marginTop: "30px" }}>
         <div className="container"
           style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-          <div style={{ width: "200px" }}></div>
+          <div style={{ width: "240px" }}></div>
           <button className="btn btn-primary btn-lg"
             style={{ color: "#fff", width: "170px", fontWeight: "bold" }}
             disabled={false}
@@ -210,7 +210,7 @@ const Home = () => {
         <br />
         {
           cond && nftAmount.length > 0 && nftAmount.map((key) =>
-            <h1 className="roof" key={key}>{getRNG()}</h1>
+            <h1 className="roof" key={key}>{getRNG(key)}</h1>
           )
         }
       </div>
