@@ -1982,12 +1982,18 @@ section {
 .btn-primary {
   border-radius: 4px;
   padding: 10px 20px;
-  border: 0;
-  background-color: #1e4356;
+  border-color: #ffffff;
+  background-color: #000000;
+  color: white;
+  font-weight: bold;
+  width: 200px;
 }
 
 .btn-primary:hover {
-  background-color: #255269;
+  background-color: #000000;
+  font-weight: bold;
+  border-color: white;
+  color: white;
 }
 
 .blog .blog-pagination {

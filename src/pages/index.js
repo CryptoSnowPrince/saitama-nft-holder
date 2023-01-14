@@ -67,7 +67,7 @@ const Home = () => {
 
     const _curChainId = await web3Provider.eth.getChainId();
     if (_curChainId !== MAINNET) {
-      alert('Wrong Network! Please switch to Binance Smart Chain!')
+      alert('Wrong Network! Please switch to Ethereum Mainnet!')
       return;
     }
     // alert("loadWeb3Modal6");
@@ -78,7 +78,7 @@ const Home = () => {
     provider.on("chainChanged", (chainId) => {
       RUN_MODE(`chain changed to ${chainId}! updating providers`);
       // alert("loadWeb3Modal chainChanged");
-      alert('Wrong Network! Please switch to Binance Smart Chain!')
+      alert('Wrong Network! Please switch to Ethereum Mainnet!')
       dispatch(action.setInjectedProvider(web3Provider));
       logoutOfWeb3Modal();
     });
@@ -174,27 +174,34 @@ const Home = () => {
         <div className="container"
           style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
           <div style={{ width: "200px" }}></div>
-          <button className="btn btn-primary btn-lg"
-            style={{ color: "#fff", width: "200px", fontWeight: "bold" }}
+          <button className="btn-primary btn-lg"
             disabled={false}
             onClick={curAcount ? logoutOfWeb3Modal : loadWeb3Modal}>
             <i className="fas fa-wallet" style={{ marginRight: "12px", color: "white" }}>
             </i>
-            {curAcount ? `${curAcount.toString().substr(0, 5)}...${curAcount.toString().substr(39, 41)}` : `Connect`}
+            {curAcount ? `Disconnect` : `Connect`}
           </button>
         </div>
       </nav>
       <br />
       <div className="center-body">
+        {
+          curAcount && (
+            <h2 className="roof">{`Your Address: ${curAcount}`}</h2>
+          )
+        }
+        <br />
         <div className="roof">
           {
             curAcount && (
-              <button className="btn btn-primary btn-lg"
-                style={{ color: "#fff", width: "400px", fontWeight: "bold" }}
-                disabled={false}
-                onClick={onClaim}>
-                {btnStr}
-              </button>
+              <div>
+                <button className="btn-primary btn-lg"
+                  style={{ width: "400px" }}
+                  disabled={false}
+                  onClick={onClaim}>
+                  {btnStr}
+                </button>
+              </div>
             )
           }
         </div>

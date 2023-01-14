@@ -3,11 +3,7 @@
 }
 
 body {
-  background-color: #55caef;
-}
-
-.section-bg {
-  background: #64A542;
+  background-color: #000000;
 }
 
 #slider {
@@ -62,12 +58,6 @@ div.login-action {
   display: flex;
 }
 
-.footer-btn {
-  height: 50px;
-  font-weight: bold;
-  margin-top: 50px;
-}
-
 input.form-input {
   margin: 2px;
   border: 1px solid #444444;
@@ -103,115 +93,6 @@ input.form-input {
   background: #f00
 }
 
-.btn-floor {
-  position: absolute;
-  width: 102px;
-  left: 580px;
-  top: 60px;
-}
-
-button:hover,
-.btn-red:hover,
-.btn-green:hover {
-  transform: scale(.97);
-  color: #fff;
-}
-
-.popup-upgrade-header {
-  text-shadow: 0em 0.1em #000, 0.038em 0.092em #000, 0.071em 0.071em #000, 0.092em 0.038em #000, 0.1em 0em #000, 0.092em -0.038em #000, 0.071em -0.071em #000, 0.038em -0.092em #000, 0em -0.1em #000, -0.038em -0.092em #000, -0.071em -0.071em #000, -0.092em -0.038em #000, -0.1em 0em #000, -0.092em 0.038em #000, -0.071em 0.071em #000, -0.038em 0.092em #000;
-  color: #fff;
-  width: 120px;
-  text-align: center;
-  position: relative;
-  left: 30px;
-  top: 5px;
-  font-size: 20px;
-  padding-top: 3px;
-}
-
-.popup-wrapper {
-  top: 0;
-  left: 0;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: none;
-  z-index: 5;
-}
-
-.popup-profit-header {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 24px;
-  color: #8ac63f;
-  text-shadow: 0em 0.08em #000, 0.031em 0.074em #000, 0.057em 0.057em #000, 0.074em 0.031em #000, 0.08em 0em #000, 0.074em -0.031em #000, 0.057em -0.057em #000, 0.031em -0.074em #000, 0em -0.08em #000, -0.031em -0.074em #000, -0.057em -0.057em #000, -0.074em -0.031em #000, -0.08em 0em #000, -0.074em 0.031em #000, -0.057em 0.057em #000, -0.031em 0.074em #000;
-}
-
-.popup-login button,
-.popup-register button {
-  margin-top: 20px;
-  display: initial;
-}
-
-.level-text {
-  font-weight: bold;
-  font-size: 17px;
-}
-
-.level-text-pop-up {
-  font-weight: bold;
-  font-size: 17px;
-}
-
-.level-text-pop-up-timer {
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.chef {
-  position: absolute;
-  height: 100px;
-  width: 80%;
-  bottom: 5px;
-  z-index: 0;
-}
-
-.popup-sell-header {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 25px;
-  color: #8ac63f;
-  font-weight: bold;
-  text-shadow: 0em 0.08em #000, 0.031em 0.074em #000, 0.057em 0.057em #000, 0.074em 0.031em #000, 0.08em 0em #000, 0.074em -0.031em #000, 0.057em -0.057em #000, 0.031em -0.074em #000, 0em -0.08em #000, -0.031em -0.074em #000, -0.057em -0.057em #000, -0.074em -0.031em #000, -0.08em 0em #000, -0.074em 0.031em #000, -0.057em 0.057em #000, -0.031em 0.074em #000;
-}
-
-.popup-sell-rate-text {
-  color: #fff;
-  text-shadow: 0em 0.1em #000, 0.038em 0.092em #000, 0.071em 0.071em #000, 0.092em 0.038em #000, 0.1em 0em #000, 0.092em -0.038em #000, 0.071em -0.071em #000, 0.038em -0.092em #000, 0em -0.1em #000, -0.038em -0.092em #000, -0.071em -0.071em #000, -0.092em -0.038em #000, -0.1em 0em #000, -0.092em 0.038em #000, -0.071em 0.071em #000, -0.038em 0.092em #000;
-  text-align: center;
-  font-size: 17px;
-  font-weight: bold;
-}
-
-.popup-sell-description {
-  color: #fff;
-  text-shadow: 0em 0.1em #000, 0.038em 0.092em #000, 0.071em 0.071em #000, 0.092em 0.038em #000, 0.1em 0em #000, 0.092em -0.038em #000, 0.071em -0.071em #000, 0.038em -0.092em #000, 0em -0.1em #000, -0.038em -0.092em #000, -0.071em -0.071em #000, -0.092em -0.038em #000, -0.1em 0em #000, -0.092em 0.038em #000, -0.071em 0.071em #000, -0.038em 0.092em #000;
-  text-align: center;
-  width: 300px;
-  font-size: 16px;
-  font-weight: bold;
-  margin: -5px auto 0;
-}
-
-.popup-sell-description span {
-  font-size: 18px;
-  display: inline-block;
-  margin-left: 2px;
-  color: #fdf611;
-  font-family: LilitaOne, sans-serif !important;
-}
-
 .alert-warning {
   margin-bottom: 10px;
 }
@@ -232,66 +113,6 @@ button:hover,
   flex-direction: column;
   margin-left: 15px;
   width: 70px;
-}
-
-.menu-btn {
-  width: 78px;
-  height: 54px;
-  background-color: transparent;
-  background-size: contain;
-  background-repeat: no-repeat;
-  transition: transform 75ms linear;
-  cursor: pointer;
-  border: 0;
-  color: #fff;
-}
-
-.menu-bar {
-  position: relative;
-  width: 250px;
-  height: 35px;
-  margin: 0 auto 10px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.menu-bar-value {
-  color: #000;
-  top: 4px;
-  font-size: 19px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  font-weight: bold;
-}
-
-.menu-bar-value-wallet {
-  left: 55%;
-}
-
-.menu-bar-without-background {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-top: -10px;
-  background-image: none;
-}
-
-.menu-bar-btn {
-  background: transparent;
-  border: 0;
-  position: absolute;
-  width: 27px;
-  height: 32px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  right: 18px;
-  top: 1px;
-  transition: transform 75ms linear;
-  transition: linear;
-  cursor: pointer;
 }
 
 .fa {
@@ -641,6 +462,7 @@ button:hover,
   width: 100%;
   justify-content: center;
   display: flex;
+  color: white;
 }
 
 .popup-renovate-input {
@@ -711,7 +533,7 @@ button:hover,
   font-size: 16px;
 }
 
-.alert-dismissible .btn-close {
+.alert-dismissible {
   padding: 2px;
 }
 
@@ -748,13 +570,6 @@ button:hover,
   margin-right: 10px;
 }
 
-
-.btn-floor {
-  width: 68px;
-  left: 265px;
-  top: 14px;
-}
-
 div.farm-coin {
   width: 15px;
   margin-left: 1px;
@@ -787,25 +602,6 @@ div.farm-coin {
   margin: 0px auto;
   left: 0px;
   top: 0px;
-}
-
-.menu-btns {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  margin: 0px auto;
-  width: 250px;
-}
-
-.menu-bar-btn {
-  right: 5px;
-  height: 25px;
-  margin-top: 5px;
-}
-
-.menu-bar-value {
-  font-size: 16px;
-  margin-top: 2px;
 }
 
 .menu-bar-value-wallet {
