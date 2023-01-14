@@ -177,12 +177,6 @@ button:hover,
   z-index: 0;
 }
 
-.roof,
-.floor-0,
-.floor_house {
-  width: 600px;
-}
-
 .popup-sell-header {
   text-align: center;
   margin-top: 15px;
@@ -633,6 +627,22 @@ button:hover,
   }
 }
 
+.center-body {
+  position: relative;
+  background-position: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.roof {
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+
 .popup-renovate-input {
   font-family: Alternative, sans-serif !important;
   border: 0;
@@ -738,27 +748,6 @@ button:hover,
   margin-right: 10px;
 }
 
-.roof,
-.floor-0,
-.floor_house {
-  width: 270px;
-  height: 85px;
-}
-
-.roof {
-  height: 60px;
-}
-
-.floor-0 {
-  height: 90px;
-  left: -1px;
-}
-
-.counter {
-  width: 60px;
-  height: 82px;
-  left: calc(50% - 118px);
-}
 
 .btn-floor {
   width: 68px;

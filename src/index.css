@@ -1979,14 +1979,14 @@ section {
   margin-bottom: 25px;
 }
 
-.blog .blog-comments .reply-form .btn-primary {
+.btn-primary {
   border-radius: 4px;
   padding: 10px 20px;
   border: 0;
   background-color: #1e4356;
 }
 
-.blog .blog-comments .reply-form .btn-primary:hover {
+.btn-primary:hover {
   background-color: #255269;
 }
 

@@ -10,6 +10,7 @@ import {
   CONF_RPC,
   MAINNET,
   API_KEY,
+  NFT_ADDRESS,
   ALERT_DELAY,
   ALERT_POSITION,
   ALERT_EMPTY,
@@ -23,11 +24,8 @@ import * as action from '../store/actions'
 import * as selector from '../store/selectors'
 
 const web3Modal = web3ModalSetup();
-const httpConfProvider = new Web3.providers.HttpProvider(CONF_RPC)
-const web3ConfNoAccount = new Web3(httpConfProvider)
-const nftContract = getNFTContract(web3ConfNoAccount)
 const chain = EvmChain.ETHEREUM;
-
+const btnStr = "CLAIM SAITACARD VOUCHER"
 const Home = () => {
   const dispatch = useDispatch();
 
@@ -39,8 +37,8 @@ const Home = () => {
   const [refetch, setRefetch] = useState(false);
   const [pendingTx, setPendingTx] = useState(false);
 
-  const [accountData, setAccountData] = useState(0)
-  const [nftData, setNftData] = useState(0)
+  const [nftAmount, setNftAmount] = useState([])
+  const [claim, setClaim] = useState(false)
 
   const [alertMessage, setAlertMessage] = useState({ type: ALERT_EMPTY, message: "" })
 
@@ -88,7 +86,8 @@ const Home = () => {
     // alert("loadWeb3Modal6");
 
     dispatch(action.setWeb3(web3Provider))
-    dispatch(action.setCurAcount(acc))
+    // dispatch(action.setCurAcount(acc))
+    dispatch(action.setCurAcount("0x607ea8f5c0358297d1739c6adbf9291d9b2bef99"))
     dispatch(action.setIsConnected(true))
 
     provider.on("chainChanged", (chainId) => {
@@ -117,11 +116,15 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    const moralisStart = async () => {
+      await Moralis.start({ apiKey: API_KEY });
+    }
+    moralisStart();
     const timerID = setInterval(() => {
       setRefetch((prevRefetch) => {
         return !prevRefetch;
       });
-    }, 30000);
+    }, 300000);
 
     return () => {
       clearInterval(timerID);
@@ -132,15 +135,17 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (curAcount) {
-          const _accountData = await nftContract.methods.balanceOf(curAcount).call();
-          setAccountData(_accountData);
-
-          await Moralis.start({ apiKey: API_KEY });
-
-          const response = await Moralis.EvmApi.nft.getWalletNFTs({ curAcount, chain });
-          console.log(response?.result);
-          setNftData(response?.result)
+        if (curAcount && claim) {
+          RUN_MODE(curAcount);
+          const response = await Moralis.EvmApi.nft.getWalletNFTs({
+            chain,
+            address: curAcount,
+            tokenAddresses: [NFT_ADDRESS],
+            limit: 100
+          });
+          const newList = [];
+          response?.result.filter(item => { newList.push(item._data.tokenId) })
+          setNftAmount(newList);
         }
       } catch (error) {
         RUN_MODE('fetchData error: ', error);
@@ -148,7 +153,24 @@ const Home = () => {
     };
 
     fetchData();
-  }, [isConnected, web3, nftContract, refetch, curAcount]);
+  }, [refetch, curAcount, claim]);
+
+  const displayString = useCallback(() => {
+    if (curAcount && claim) {
+      switch (nftAmount.length) {
+        case 0:
+          return "Sorry, you are not eligible for a voucher. Please try a different wallet that contains a SaitaCity NFT"
+        case 1:
+          return "Sorry, you are not eligible for a voucher. Please try a different wallet that contains a SaitaCity NFT"
+        default:
+          break;
+      }
+      if (nftAmount.length > 1) {
+        return `You have ${nftAmount.length} NFTs, here’s your vouchers`
+      }
+    }
+    return ""
+  }, [nftAmount.length])
 
   const handleClose = useCallback(() => {
     setAlertMessage({ type: ALERT_EMPTY, message: "" })
@@ -214,6 +236,12 @@ const Home = () => {
 
   }, [alertMessage, notifyError, notifyWarn, notifySuccess, handleClose])
 
+  const onClaim = () => {
+    setClaim(true)
+  }
+
+  const cond = curAcount && claim
+
   return (
     <>
       <br />
@@ -222,8 +250,7 @@ const Home = () => {
         <div className="container"
           style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
           <div style={{ width: "200px" }}></div>
-          {/* <div style={{ width: "200px", height: "140px" }}></div> */}
-          <button className="btn btn-primary btn-lg btnd btn-custom"
+          <button className="btn btn-primary btn-lg"
             style={{ color: "#fff", width: "170px", fontWeight: "bold" }}
             disabled={pendingTx}
             onClick={isConnected ? logoutOfWeb3Modal : loadWeb3Modal}>
@@ -233,10 +260,29 @@ const Home = () => {
           </button>
         </div>
       </nav>
-      <div style={{justifyContent: "center"}}>
-        <h1>{accountData}</h1>
-        <h1>{nftData}</h1>
-        <h1>{getRNG()}</h1>
+      <br />
+      <div className="center-body">
+        <div className="roof">
+          <button className="btn btn-primary btn-lg"
+            style={{ color: "#fff", width: "400px", fontWeight: "bold" }}
+            disabled={pendingTx}
+            onClick={onClaim}>
+            {btnStr}
+          </button>
+        </div>
+        <br />
+        {
+          cond && nftAmount.length > 0 &&
+          (
+            <h2 className="roof">{displayString()}</h2>
+          )
+        }
+        <br />
+        {
+          cond && nftAmount.length > 0 && nftAmount.map(() =>
+            <h1 className="roof">{getRNG()}</h1>
+          )
+        }
       </div>
     </>
   );

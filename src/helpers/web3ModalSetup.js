@@ -16,7 +16,7 @@ const web3ModalSetup = () =>
         options: {
           infuraId: process.env.REACT_APP_INFURA_ID, // required
           rpc: {
-            1: 'https://mainnet.infura.io/v3/', // ETH Mainnet
+            1: process.env.REACT_APP_PRC, // ETH Mainnet
           },
         },
       },
