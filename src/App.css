@@ -825,10 +825,11 @@ div.farm-coin {
 }
 
 .logo-desktop {
-  width: 75px;
-  height: 55px;
-  left: calc(50% - 25px);
-  bottom: 44px;
+  position: absolute;
+  background: url(./assets/img/logo.png) no-repeat;
+  background-size: contain;
+  width: 240px;
+  height: 200px;
 }
 
 .collect-action {

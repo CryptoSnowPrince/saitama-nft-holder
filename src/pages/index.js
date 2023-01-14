@@ -1,23 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from 'react-toastify';
 import Moralis from 'moralis';
 import { EvmChain } from '@moralisweb3/evm-utils';
 import web3ModalSetup from "./../helpers/web3ModalSetup";
 import Web3 from "web3";
 import {
   RUN_MODE,
-  CONF_RPC,
   MAINNET,
   API_KEY,
   NFT_ADDRESS,
-  ALERT_DELAY,
-  ALERT_POSITION,
-  ALERT_EMPTY,
-  ALERT_SUCCESS,
-  ALERT_WARN,
-  ALERT_ERROR,
-  getNFTContract,
 } from "../constant";
 import { getRNG } from "../utils/util";
 import * as action from '../store/actions'
@@ -29,18 +20,14 @@ const btnStr = "CLAIM SAITACARD VOUCHER"
 const Home = () => {
   const dispatch = useDispatch();
 
-  const web3 = useSelector(selector.web3State)
-  const isConnected = useSelector(selector.isConnectedState)
+  const isStarted = useSelector(selector.isConnectedState)
   const injectedProvider = useSelector(selector.injectedProviderState)
   const curAcount = useSelector(selector.curAcountState)
 
   const [refetch, setRefetch] = useState(false);
-  const [pendingTx, setPendingTx] = useState(false);
 
   const [nftAmount, setNftAmount] = useState([])
   const [claim, setClaim] = useState(false)
-
-  const [alertMessage, setAlertMessage] = useState({ type: ALERT_EMPTY, message: "" })
 
   const logoutOfWeb3Modal = async () => {
     // alert("logoutOfWeb3Modal");
@@ -52,7 +39,7 @@ const Home = () => {
     ) {
       await injectedProvider.provider.disconnect();
     }
-    dispatch(action.setIsConnected(false))
+    dispatch(action.setCurAcount(null))
 
     window.location.reload();
   };
@@ -80,20 +67,18 @@ const Home = () => {
 
     const _curChainId = await web3Provider.eth.getChainId();
     if (_curChainId !== MAINNET) {
-      setAlertMessage({ type: ALERT_ERROR, message: 'Wrong Network! Please switch to Binance Smart Chain!' })
+      alert('Wrong Network! Please switch to Binance Smart Chain!')
       return;
     }
     // alert("loadWeb3Modal6");
 
     dispatch(action.setWeb3(web3Provider))
-    // dispatch(action.setCurAcount(acc))
-    dispatch(action.setCurAcount("0x607ea8f5c0358297d1739c6adbf9291d9b2bef99"))
-    dispatch(action.setIsConnected(true))
+    dispatch(action.setCurAcount(acc))
 
     provider.on("chainChanged", (chainId) => {
       RUN_MODE(`chain changed to ${chainId}! updating providers`);
       // alert("loadWeb3Modal chainChanged");
-      setAlertMessage({ type: ALERT_ERROR, message: 'Wrong Network! Please switch to Binance Smart Chain!' })
+      alert('Wrong Network! Please switch to Binance Smart Chain!')
       dispatch(action.setInjectedProvider(web3Provider));
       logoutOfWeb3Modal();
     });
@@ -101,7 +86,7 @@ const Home = () => {
     provider.on("accountsChanged", () => {
       RUN_MODE(`curAcount changed!`);
       // alert("loadWeb3Modal accountsChanged");
-      setAlertMessage({ type: ALERT_WARN, message: 'Current Account Changed!' })
+      alert('Current Account Changed!')
       dispatch(action.setInjectedProvider(web3Provider));
       logoutOfWeb3Modal();
     });
@@ -117,7 +102,10 @@ const Home = () => {
 
   useEffect(() => {
     const moralisStart = async () => {
-      await Moralis.start({ apiKey: API_KEY });
+      if (!isStarted) {
+        await Moralis.start({ apiKey: API_KEY });
+        dispatch(action.setIsStarted(true));
+      }
     }
     moralisStart();
     const timerID = setInterval(() => {
@@ -129,23 +117,21 @@ const Home = () => {
     return () => {
       clearInterval(timerID);
     };
-
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (curAcount && claim) {
-          RUN_MODE(curAcount);
           const response = await Moralis.EvmApi.nft.getWalletNFTs({
             chain,
             address: curAcount,
             tokenAddresses: [NFT_ADDRESS],
             limit: 100
           });
-          const newList = [];
-          response?.result.filter(item => { newList.push(item._data.tokenId) })
-          setNftAmount(newList);
+          RUN_MODE(response?.result.map((value, index) => value._data.tokenId));
+          setNftAmount(response?.result.map((value, index) => value._data.tokenId));
         }
       } catch (error) {
         RUN_MODE('fetchData error: ', error);
@@ -161,7 +147,7 @@ const Home = () => {
         case 0:
           return "Sorry, you are not eligible for a voucher. Please try a different wallet that contains a SaitaCity NFT"
         case 1:
-          return "Sorry, you are not eligible for a voucher. Please try a different wallet that contains a SaitaCity NFT"
+          return "You are eligible, here’s your code"
         default:
           break;
       }
@@ -170,74 +156,12 @@ const Home = () => {
       }
     }
     return ""
-  }, [nftAmount.length])
-
-  const handleClose = useCallback(() => {
-    setAlertMessage({ type: ALERT_EMPTY, message: "" })
-  }, [setAlertMessage])
-
-  const notifySuccess = useCallback(() => {
-    toast.success(alertMessage.message, {
-      position: ALERT_POSITION,
-      autoClose: ALERT_DELAY,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      onClose: handleClose,
-      className: 'alert-message-success'
-    });
-  }, [alertMessage.message, handleClose]);
-
-  const notifyError = useCallback(() => {
-    toast.error(alertMessage.message, {
-      position: ALERT_POSITION,
-      autoClose: ALERT_DELAY,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      onClose: handleClose,
-      className: 'alert-message-error'
-    });
-  }, [alertMessage.message, handleClose]);
-
-  const notifyWarn = useCallback(() => {
-    toast.warn(alertMessage.message, {
-      position: ALERT_POSITION,
-      autoClose: ALERT_DELAY,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      onClose: handleClose,
-      className: 'alert-message-warn',
-      progressClassName: 'alert-message-warn-progress'
-    });
-  }, [alertMessage.message, handleClose]);
-
-  useEffect(() => {
-    switch (alertMessage.type) {
-      case ALERT_ERROR:
-        notifyError()
-        return;
-      case ALERT_SUCCESS:
-        notifySuccess()
-        return;
-      case ALERT_WARN:
-        notifyWarn()
-        return;
-      case ALERT_EMPTY:
-        return;
-      default:
-        handleClose();
-        return;
-    }
-
-  }, [alertMessage, notifyError, notifyWarn, notifySuccess, handleClose])
+  }, [nftAmount, curAcount, claim])
 
   const onClaim = () => {
-    setClaim(true)
+    if (curAcount) {
+      setClaim(true)
+    }
   }
 
   const cond = curAcount && claim
@@ -245,15 +169,15 @@ const Home = () => {
   return (
     <>
       <br />
-      <ToastContainer />
+      <div className="logo-desktop" />
       <nav className="navbar navbar-expand-sm navbar-dark" style={{ marginTop: "30px" }}>
         <div className="container"
           style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
           <div style={{ width: "200px" }}></div>
           <button className="btn btn-primary btn-lg"
             style={{ color: "#fff", width: "170px", fontWeight: "bold" }}
-            disabled={pendingTx}
-            onClick={isConnected ? logoutOfWeb3Modal : loadWeb3Modal}>
+            disabled={false}
+            onClick={curAcount ? logoutOfWeb3Modal : loadWeb3Modal}>
             <i className="fas fa-wallet" style={{ marginRight: "12px", color: "white" }}>
             </i>
             {curAcount ? `${curAcount.toString().substr(0, 5)}...${curAcount.toString().substr(39, 41)}` : `Connect`}
@@ -263,24 +187,30 @@ const Home = () => {
       <br />
       <div className="center-body">
         <div className="roof">
-          <button className="btn btn-primary btn-lg"
-            style={{ color: "#fff", width: "400px", fontWeight: "bold" }}
-            disabled={pendingTx}
-            onClick={onClaim}>
-            {btnStr}
-          </button>
+          {
+            curAcount && (
+              <button className="btn btn-primary btn-lg"
+                style={{ color: "#fff", width: "400px", fontWeight: "bold" }}
+                disabled={false}
+                onClick={onClaim}>
+                {btnStr}
+              </button>
+            )
+          }
         </div>
         <br />
         {
-          cond && nftAmount.length > 0 &&
+          cond &&
           (
-            <h2 className="roof">{displayString()}</h2>
+            <div>
+              <h2 className="roof">{displayString()}</h2>
+            </div>
           )
         }
         <br />
         {
-          cond && nftAmount.length > 0 && nftAmount.map(() =>
-            <h1 className="roof">{getRNG()}</h1>
+          cond && nftAmount.length > 0 && nftAmount.map((key) =>
+            <h1 className="roof" key={key}>{getRNG()}</h1>
           )
         }
       </div>
