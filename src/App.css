@@ -529,6 +529,10 @@ input.form-input {
 }
 
 .footer {
+  color: white;
+}
+
+.footer-text {
   position: relative;
   background-position: center;
   background-size: contain;
@@ -536,6 +540,18 @@ input.form-input {
   justify-content: center;
   display: flex;
   color: white;
+  font-size: 32px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.footer-email {
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  color: rgb(19, 4, 221);
   font-size: 32px;
   font-family: 'Courier New', Courier, monospace;
 }
