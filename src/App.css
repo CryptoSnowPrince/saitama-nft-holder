@@ -465,6 +465,81 @@ input.form-input {
   color: white;
 }
 
+.msg {
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  color: white;
+  font-weight: bold;
+  font-size: 32px;
+  font-style: italic;
+}
+
+.msg-description {
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  color: white;
+  font-size: 24px;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+}
+
+.btn-description {
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  color: white;
+  font-size: 30px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.rule-title {
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  font-family:'Courier New', Courier, monospace;
+}
+
+.rule-description {
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  color: white;
+  font-size: 28px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.footer {
+  position: relative;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  color: white;
+  font-size: 32px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
 .popup-renovate-input {
   font-family: Alternative, sans-serif !important;
   border: 0;
@@ -626,6 +701,7 @@ div.farm-coin {
   background-size: contain;
   width: 240px;
   height: 200px;
+  margin-top: 20px;
 }
 
 .collect-action {
