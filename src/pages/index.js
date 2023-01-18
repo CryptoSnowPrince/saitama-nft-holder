@@ -243,11 +243,16 @@ const Home = () => {
                 }
                 <h2 className="rule-title">{ruleData.title}</h2>
                 <br />
+                <br />
                 {
-                    ruleData.description.map((key, value) =>
-                        <h1 className="rule-description" key={key}>{key}</h1>
+                    ruleData.description.map((key) =>
+                        <div>
+                            <h1 className="rule-description" key={key}>{key}</h1>
+                            <br />
+                        </div>
                     )
                 }
+                <br />
                 <br />
                 <div className="footer">
                     <h2 className="footer-text">{footer.title}</h2>
