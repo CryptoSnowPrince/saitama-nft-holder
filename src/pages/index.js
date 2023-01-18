@@ -251,7 +251,7 @@ const Home = () => {
                 <br />
                 <div className="footer">
                     <h2 className="footer-text">{footer.title}</h2>
-                    <a className="footer-email">{footer.email}</a>
+                    <a className="footer-email" href="_">{footer.email}</a>
                 </div>
             </div>
         </>
