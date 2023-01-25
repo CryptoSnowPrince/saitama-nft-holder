@@ -47,6 +47,7 @@ const Home = () => {
 
     const [nftAmount, setNftAmount] = useState([])
     const [claim, setClaim] = useState(false)
+    const [isPending, setIsPending] = useState(false)
 
     const logoutOfWeb3Modal = async () => {
         // alert("logoutOfWeb3Modal");
@@ -151,6 +152,7 @@ const Home = () => {
                     });
                     RUN_MODE(response?.result.map((value, index) => value._data.tokenId));
                     setNftAmount(response?.result.map((value, index) => value._data.tokenId));
+                    setIsPending(true);
                 }
             } catch (error) {
                 RUN_MODE('fetchData error: ', error);
@@ -167,14 +169,19 @@ const Home = () => {
                     "Wallet validated. Here's your voucher(s).",
                     "Please copy and save these vouchers in a secure place. Do not show it publicly, once used they will be invalidated."
                 ]
-            } else {
+            } else if (isPending) {
                 return [
                     "Wallet not eligible for a voucher.",
                     `The wallet you used is not holding a copy of the NeonDowntown NFT. Please try another wallet. Make sure you purchased an original copy of the NFT by checking the contract.`
                 ]
+            } else {
+                return [
+                    `Fetching... Please wait a few seconds.`,
+                    `Please wait a few seconds.`
+                ]
             }
         }
-    }, [nftAmount, curAcount, claim])
+    }, [nftAmount, curAcount, claim, isPending])
 
     const onClaim = () => {
         if (curAcount) {
