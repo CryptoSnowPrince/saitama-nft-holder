@@ -12,4 +12,4 @@ export const RUN_MODE = RELEASE
 
 export const NFT_ADDRESS = process.env.REACT_APP_NFT
 export const API_KEY = process.env.REACT_APP_API
-export const MAINNET = process.env.REACT_APP_MAINNET
+export const MAINNET = parseInt(process.env.REACT_APP_MAINNET)
