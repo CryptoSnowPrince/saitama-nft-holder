@@ -187,12 +187,20 @@ const Home = () => {
     return (
         <>
             <br />
-            <div className="logo-desktop" />
+            <div className="logo-desktop" style={{
+                marginLeft: '-10px',
+            }} />
             <nav className="navbar navbar-expand-sm navbar-dark">
                 <div className="container"
                     style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                     <div style={{ width: "200px" }}></div>
                     <button className="btn-primary btn-lg"
+                        style={{
+                            position: 'absolute',
+                            top: '10px',
+                            right: '20px',
+                            width: 'fit-content',
+                        }}
                         disabled={false}
                         onClick={curAcount ? logoutOfWeb3Modal : loadWeb3Modal}>
                         <i className="fas fa-wallet" style={{ marginRight: "12px", color: "white" }}>

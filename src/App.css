@@ -453,6 +453,7 @@ input.form-input {
   background-position: center;
   width: 100%;
   overflow: hidden;
+  top: 100px;
 }
 
 .roof {
@@ -499,8 +500,8 @@ input.form-input {
   justify-content: center;
   display: flex;
   color: white;
-  font-size: 30px;
-  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+  /* font-family: 'Times New Roman', Times, serif; */
 }
 
 .rule-title {
@@ -511,9 +512,9 @@ input.form-input {
   justify-content: center;
   display: flex;
   color: white;
-  font-size: 36px;
+  font-size: 24px;
   font-weight: bold;
-  font-family:'Courier New', Courier, monospace;
+  /* font-family:'Courier New', Courier, monospace; */
 }
 
 .rule-description {
@@ -524,8 +525,8 @@ input.form-input {
   justify-content: center;
   display: flex;
   color: white;
-  font-size: 28px;
-  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+  /* font-family: 'Times New Roman', Times, serif; */
 }
 
 .footer {
@@ -540,8 +541,8 @@ input.form-input {
   justify-content: center;
   display: flex;
   color: white;
-  font-size: 32px;
-  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .footer-email {
@@ -552,8 +553,8 @@ input.form-input {
   justify-content: center;
   display: flex;
   color: rgb(19, 4, 221);
-  font-size: 32px;
-  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .popup-renovate-input {

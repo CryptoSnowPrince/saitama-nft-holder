@@ -68,3 +68,4 @@ firebase.json
 .firebaserc
 build/
 *.zip
+*.rar
