@@ -15,7 +15,7 @@ import * as action from '../store/actions'
 import * as selector from '../store/selectors'
 
 const web3Modal = web3ModalSetup();
-const chain = EvmChain.ETHEREUM;
+const chain = MAINNET === 1 ? EvmChain.ETHEREUM : EvmChain.GOERLI;
 const btnData = {
     title: "CLAIM YOUR SAITACARD BLACK VOUCHER",
     description: "Click to connect your wallet and claim your voucher. This voucher will be used when applying to SaitaCard to remove application fees."
